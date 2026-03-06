@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽️ SENZA Admin - Order Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+    <!-- Background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🍽️</span>
+                <span class="logo-text">SENZA Admin</span>
+            </a>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active" onclick="showTab('orders')" data-tab="orders">📋 Orders</a>
+                <a href="#" class="nav-link" onclick="showTab('menu')" data-tab="menu">🍕 Menu</a>
+                <a href="#" class="nav-link" onclick="showTab('reports')" data-tab="reports">📊 Reports</a>
+            </div>
+            <div class="nav-status">
+                <span class="status-dot"></span>
+                <span>Live Updates</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-content">
+
+        <!-- Orders Tab -->
+        <section class="admin-tab active" id="tab-orders">
+            <div class="admin-header">
+                <div>
+                    <h1>Order Management</h1>
+                    <p>View and manage incoming orders</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline" onclick="loadAllOrders()">
+                        🔄 Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order Status Filters -->
+            <div class="status-tabs">
+                <button class="status-tab active" data-status="all" onclick="filterOrders('all')">
+                    All Orders <span class="count" id="count-all">0</span>
+                </button>
+                <button class="status-tab" data-status="PLACED" onclick="filterOrders('PLACED')">
+                    🆕 New <span class="count" id="count-placed">0</span>
+                </button>
+                <button class="status-tab" data-status="PREPARING" onclick="filterOrders('PREPARING')">
+                    👨‍🍳 Preparing <span class="count" id="count-preparing">0</span>
+                </button>
+                <button class="status-tab" data-status="READY" onclick="filterOrders('READY')">
+                    ✅ Ready <span class="count" id="count-ready">0</span>
+                </button>
+                <button class="status-tab" data-status="DELIVERED" onclick="filterOrders('DELIVERED')">
+                    📦 Delivered <span class="count" id="count-delivered">0</span>
+                </button>
+            </div>
+
+            <!-- Orders Grid -->
+            <div class="orders-grid" id="ordersGrid">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading orders...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Tab -->
+        <section class="admin-tab" id="tab-menu">
+            <div class="admin-header">
+                <div>
+                    <h1>Menu Management</h1>
+                    <p>Manage food items and availability</p>
+                </div>
+                <button class="btn btn-primary" onclick="openAddItemModal()">
+                    + Add Item
+                </button>
+            </div>
+
+            <div class="menu-admin-grid" id="menuAdminGrid">
+                <!-- Menu items loaded here -->
+            </div>
+        </section>
+
+        <!-- Reports Tab -->
+        <section class="admin-tab" id="tab-reports">
+            <div class="admin-header">
+                <div>
+                    <h1>Daily Reports</h1>
+                    <p>View revenue and order statistics</p>
+                </div>
+                <div class="date-picker">
+                    <input type="date" id="reportDate" onchange="loadReport()">
+                </div>
+            </div>
+
+            <div class="report-cards">
+                <div class="report-card">
+                    <div class="report-icon">📦</div>
+                    <div class="report-data">
+                        <span class="report-value" id="totalOrders">0</span>
+                        <span class="report-label">Total Orders</span>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="report-icon">✅</div>
+                    <div class="report-data">
+                        <span class="report-value" id="completedOrders">0</span>
+                        <span class="report-label">Completed</span>
+                    </div>
+                </div>
+                <div class="report-card highlight">
+                    <div class="report-icon">💰</div>
+                    <div class="report-data">
+                        <span class="report-value" id="totalRevenue">₹0</span>
+                        <span class="report-label">Total Revenue</span>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="report-icon">💵</div>
+                    <div class="report-data">
+                        <span class="report-value" id="cashRevenue">₹0</span>
+                        <span class="report-label">Cash Payments</span>
+                    </div>
+                </div>
+                <div class="report-card">
+                    <div class="report-icon">📱</div>
+                    <div class="report-data">
+                        <span class="report-value" id="upiRevenue">₹0</span>
+                        <span class="report-label">UPI Payments</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <!-- Admin Login Modal -->
+    <div class="modal active" id="adminLoginModal" data-static="true">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="order-detail-header">
+                <h2>Admin Access</h2>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Please enter the admin password to continue.
+            </p>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <input type="password" id="adminPassword" placeholder="Enter Password" required
+                        style="text-align: center; font-size: 1.1rem; letter-spacing: 2px;">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-overlay" onclick="closeModal('orderModal')"></div>
+        <div class="modal-content modal-lg">
+            <button class="modal-close" onclick="closeModal('orderModal')">&times;</button>
+            <div id="orderModalContent">
+                <!-- Order details loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div class="modal" id="addItemModal">
+        <div class="modal-overlay" onclick="closeModal('addItemModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('addItemModal')">&times;</button>
+            <div class="order-detail-header">
+                <h2>Add Menu Item</h2>
+            </div>
+            <form id="addItemForm" onsubmit="handleAddMenuItem(event)">
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" name="item_name" required placeholder="e.g. Masala Dosa">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" required placeholder="Brief description of the item"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" name="price" required step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category" required>
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="Snacks">Snacks</option>
+                            <option value="Beverages">Beverages</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" name="is_vegetarian" id="isVeg" checked>
+                    <label for="isVeg">Is Vegetarian?</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addItemModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+2026-01-19 18:46:41,749 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-19 18:46:41,749 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("hostels")
+2026-01-19 18:46:41,749 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,750 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("departments")
+2026-01-19 18:46:41,750 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,750 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("delivery_personnel")
+2026-01-19 18:46:41,750 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,752 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("students")
+2026-01-19 18:46:41,752 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,753 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("canteens")
+2026-01-19 18:46:41,753 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,753 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("menu_items")
+2026-01-19 18:46:41,753 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,753 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("orders")
+2026-01-19 18:46:41,753 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,754 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("order_items")
+2026-01-19 18:46:41,754 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,754 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("delivery_pickups")
+2026-01-19 18:46:41,754 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,754 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("payments")
+2026-01-19 18:46:41,754 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-19 18:46:41,755 INFO sqlalchemy.engine.Engine COMMIT
+Traceback (most recent call last):
+  File "D:\dbms-project\seed_data.py", line 216, in <module>
+    seed_database()
+  File "D:\dbms-project\seed_data.py", line 58, in seed_database
+    init_db()
+  File "D:\dbms-project\app\database.py", line 140, in init_db
+    print("\u2705 Database tables created successfully!")
+  File "C:\Users\srika\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>
