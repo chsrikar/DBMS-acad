@@ -1,0 +1,52 @@
+# Render Deployment - Ignore Files
+# These files are not needed for production deployment
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Development files
+.env.local
+.env.development
+*.db
+*.sqlite
+*.sqlite3
+
+# Documentation that's not needed in deployment
+docs/
+*.md
+!RENDER_DEPLOYMENT.md
+
+# Frontend (if deploying separately)
+frontend/
+
+# Testing
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Seed/test data
+seed_data.py
+seed_output.txt
+sql_queries.py

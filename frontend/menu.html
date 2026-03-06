@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - SENZA</title>
+    <meta name="description" content="Browse our delicious menu items">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-icon">🍽️</span>
+                <span class="logo-text">SENZA</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-page="home">Home</a>
+                <a href="menu.html" class="nav-link active" data-page="menu">Menu</a>
+                <a href="orders.html" class="nav-link" data-page="orders">My Orders</a>
+                <a href="profile.html" class="nav-link" data-page="profile">Profile</a>
+                <a href="cart.html" class="nav-link" data-page="cart">
+                    Cart <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+                </a>
+            </div>
+            <div class="nav-auth" id="navAuth">
+                <!-- Auth buttons will be dynamically added -->
+            </div>
+            <button class="nav-toggle" id="navToggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        <!-- Menu Section -->
+        <section class="section section-menu active" id="section-menu">
+            <div class="section-header">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="section-subtitle">Fresh & delicious food prepared just for you</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="filter-container">
+                <div class="filter-tabs" id="categoryTabs">
+                    <button class="filter-tab active" data-category="all">All Items</button>
+                    <button class="filter-tab" data-category="Snacks">🍿 Snacks</button>
+                    <button class="filter-tab" data-category="Beverages">🥤 Beverages</button>
+                </div>
+                <div class="filter-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="vegOnlyFilter">
+                        <span class="checkmark"></span>
+                        <span>🥬 Veg Only</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu items will be loaded dynamically -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading delicious items...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-overlay" onclick="closeModal('loginModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            <div class="modal-header">
+                <h2>Welcome Back!</h2>
+                <p>Login to continue ordering</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            <div class="modal-footer">
+                <p>Don't have an account? <a href="#" onclick="switchModal('loginModal', 'registerModal')">Register</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-overlay" onclick="closeModal('registerModal')"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+            <div class="modal-header">
+                <h2>Create Account</h2>
+                <p>Join us to start ordering</p>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regName">Full Name</label>
+                        <input type="text" id="regName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regRoll">Roll Number</label>
+                        <input type="text" id="regRoll" placeholder="CSE2024001" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" placeholder="your@college.edu" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Phone (optional)</label>
+                    <input type="tel" id="regPhone" placeholder="9876543210">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regHostel">Hostel</label>
+                        <select id="regHostel">
+                            <option value="">Select Hostel</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="regDepartment">Department</label>
+                        <select id="regDepartment">
+                            <option value="">Select Department</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" placeholder="Min 6 characters" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            </form>
+            <div class="modal-footer">
+                <p>Already have an account? <a href="#" onclick="switchModal('registerModal', 'loginModal')">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>🍽️ SENZA - Campus Utility Platform</p>
+            <p class="footer-subtitle">A student-led initiative to simplify campus life</p>
+            <a href="admin.html" style="color: var(--primary); text-decoration: none;">👨‍🍳 Admin Dashboard</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+
+</html>
