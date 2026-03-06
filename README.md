@@ -1430,7 +1430,6 @@ pytest --cov=app tests/
 ## 🤝 Contributing
 
 This is an academic project, but contributions are welcome!
-version 1.0 created by chinthapenta srikar in collabration with Vimal J Mathew
 
 ### How to Contribute
 
