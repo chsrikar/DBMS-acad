@@ -130,12 +130,16 @@ This project serves multiple purposes:
 
 ### Frontend
 
+*The project frontend has recently been completely rewritten and upgraded from static HTML/JS to a modern React Single Page Application.*
+
 | Technology | Purpose |
 |------------|---------|
-| **HTML5** | Structure and semantics |
-| **CSS3** | Modern styling with animations |
-| **JavaScript (ES6+)** | Client-side logic and API interaction |
-| **Fetch API** | HTTP requests to backend |
+| **React 18** | Modern component-based UI library |
+| **Vite** | Next-generation fast frontend build tool |
+| **React Router v6** | Client-side routing and navigation |
+| **Tailwind CSS** | Utility-first CSS framework for modern styling |
+| **Framer Motion** | Animation library for fluid UI transitions |
+| **Axios** | Robust HTTP client for backend API interaction |
 
 ### Development Tools
 
@@ -328,30 +332,38 @@ dbms-project/
 │       ├── payments.py           # Payment endpoints (/api/payments/*)
 │       └── canteen.py            # Canteen endpoints (/api/canteen/*)
 │
-├── frontend/                     # Frontend application
-│   ├── index.html                # Landing page
-│   ├── menu.html                 # Browse menu
-│   ├── cart.html                 # Shopping cart
-│   ├── orders.html               # Order history & tracking
-│   ├── profile.html              # User profile
-│   ├── admin.html                # Admin dashboard
-│   │
-│   ├── css/                      # Stylesheets
-│   │   ├── styles.css            # Main styles
-│   │   ├── components.css        # Reusable components
-│   │   └── admin.css             # Admin-specific styles
-│   │
-│   └── js/                       # JavaScript modules
-│       ├── api.js                # API communication layer
-│       ├── auth.js               # Authentication logic
-│       ├── app.js                # Main application logic
-│       ├── menu.js               # Menu browsing
-│       ├── cart.js               # Cart management
-│       ├── cart-page.js          # Cart page logic
-│       ├── orders-page.js        # Orders page logic
-│       ├── profile-page.js       # Profile page logic
-│       ├── admin.js              # Admin dashboard
-│       └── shared.js             # Shared utilities
+├── frontend-react/               # Modern React Frontend Application
+│   ├── src/
+│   │   ├── components/           # Reusable React UI Components
+│   │   │   ├── Navbar.jsx        # Top navigation with responsive menu & auth state
+│   │   │   ├── MenuCard.jsx      # Compact card for displaying basic food items
+│   │   │   ├── ExpandableMenuCard.jsx # Interactive card with detailed food info
+│   │   │   ├── CartItem.jsx      # Individual item display within the shopping cart
+│   │   │   ├── OrderCard.jsx     # Card displaying order history and current status
+│   │   │   ├── InventoryCard.jsx # Admin component for managing food inventory
+│   │   │   ├── Prism.jsx         # Advanced 3D/glassmorphism UI effect component
+│   │   │   ├── Footer.jsx        # Site footer with links and information
+│   │   │   └── ui/               # Base UI elements (custom buttons, inputs, etc.)
+│   │   ├── pages/                # Main Application Views (Routes)
+│   │   │   ├── Home.jsx          # Landing page with hero section and featured items
+│   │   │   ├── Login.jsx         # User authentication page
+│   │   │   ├── Register.jsx      # New user registration page
+│   │   │   ├── Menu.jsx          # Complete food catalog with categories
+│   │   │   ├── Cart.jsx          # Shopping cart review and checkout process
+│   │   │   ├── Orders.jsx        # Track current orders and view order history
+│   │   │   ├── Profile.jsx       # User profile details and settings
+│   │   │   ├── Recommendations.jsx # AI-powered personalized food suggestions
+│   │   │   ├── Inventory.jsx     # Admin page for managing menu availability/pricing
+│   │   │   ├── AdminDashboard.jsx # Comprehensive admin analytics and overview
+│   │   │   └── AdminLogin.jsx    # Secure login specifically for administrators
+│   │   ├── context/              # React Context Providers
+│   │   │   ├── AuthContext.jsx   # Global user authentication state management
+│   │   │   └── CartContext.jsx   # Global shopping cart state management
+│   │   ├── App.jsx               # Application root, routing configuration (React Router)
+│   │   └── main.jsx              # React application entry point
+│   ├── package.json              # Node.js dependencies and scripts
+│   ├── tailwind.config.js        # Tailwind CSS styling configuration
+│   └── vite.config.js            # Vite build tool configuration
 │
 ├── docs/                         # Documentation
 │   ├── DATABASE_SCHEMA.md        # Database design documentation
@@ -373,7 +385,7 @@ dbms-project/
 |-----------|---------|-----------|
 | **`app/`** | Contains all backend Python code | `main.py`, `models.py`, `schemas.py` |
 | **`app/routers/`** | API endpoint definitions organized by feature | `students.py`, `orders.py` |
-| **`frontend/`** | Static HTML/CSS/JS files for the UI | `index.html`, `menu.html` |
+| **`frontend-react/`** | React SPA frontend application | `App.jsx`, `main.jsx` |
 | **`docs/`** | Project documentation and guides | `DATABASE_SCHEMA.md` |
 | **Root** | Configuration and utility scripts | `requirements.txt`, `seed_data.py` |
 
@@ -790,21 +802,21 @@ Once the server is running, open your browser:
 
 ### Open Frontend
 
-Open the HTML files directly in your browser:
+The modern frontend is built with React and Vite. To run the development server:
 
 ```powershell
-# Windows - open default browser
-start frontend/index.html
+# Open a new terminal window
+cd frontend-react
 
-# Or manually navigate to:
-# file:///D:/dbms-project/frontend/index.html
+# Install dependencies (only needed the first time)
+npm install
+
+# Start the development server
+npm run dev
 ```
 
-**For better experience, use Live Server:**
-1. Install [VS Code Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
-2. Right-click `frontend/index.html`
-3. Select "Open with Live Server"
-4. Frontend opens at `http://127.0.0.1:5500/frontend/index.html`
+**Access the application at:**
+- The frontend will automatically open at `http://localhost:5173` or `http://localhost:3000` depending on Vite's allocation.
 
 ### Testing Setup
 
@@ -812,7 +824,7 @@ Verify everything is working:
 
 1. **API Test**: Visit http://localhost:8000/docs
 2. **Get Students**: Try `GET /api/students/` endpoint
-3. **Frontend Test**: Open `frontend/index.html` in browser
+3. **Frontend Test**: Open `http://localhost:5173` in your browser
 4. **Login Test**: Use sample credentials:
    - Email: `john.doe@college.edu`
    - Password: `password123`
@@ -898,7 +910,7 @@ python seed_data.py
 5. Click "Execute"
 
 **Via Frontend:**
-1. Open frontend/index.html
+1. Open http://localhost:5173
 2. Click "Register" in navigation
 3. Fill registration form
 4. Submit
